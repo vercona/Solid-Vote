@@ -9,7 +9,9 @@ import {
   Scripts,
   Title,
 } from "solid-start";
-import "./root.css";
+
+import "./root.scss";
+import 'uno.css'
 
 import { useRoutes } from "@solidjs/router";
 import routes from './pages/router'
