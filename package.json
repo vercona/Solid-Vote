@@ -9,7 +9,8 @@
   "devDependencies": {
     "solid-start-node": "^0.2.0",
     "typescript": "^4.8.4",
-    "vite": "^3.1.8"
+    "vite": "^3.1.8",
+    "vite-plugin-solid-styled": "^0.7.3"
   },
   "dependencies": {
     "@solidjs/meta": "^0.28.0",
@@ -18,6 +19,7 @@
     "sass": "^1.55.0",
     "solid-js": "^1.6.0",
     "solid-start": "^0.2.0",
+    "solid-styled": "^0.7.3",
     "undici": "^5.11.0",
     "unocss": "^0.46.0"
   },

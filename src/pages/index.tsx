@@ -1,7 +1,14 @@
 import { Title } from "solid-start";
 import Counter from "~/components/Counter";
+import { css } from 'solid-styled';
 
 export default function Home() {
+  css`
+    p {
+      color: red;
+    }
+  `;
+
   return (
     <main>
       <Title>Hello World</Title>
