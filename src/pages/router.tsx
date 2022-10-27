@@ -7,8 +7,8 @@ const routes = [
   },
 
   {
-    path: "/test",
-    component: lazy(() => import("./test"))
+    path: "/builder",
+    component: lazy(() => import("./builder"))
   },
 
   {
