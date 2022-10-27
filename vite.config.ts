@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
+import { resolve } from "path"
 
-import solid from "solid-start/vite";
+import solid from 'vite-plugin-solid';
 import solidStyled from 'vite-plugin-solid-styled';
 import { undestructurePlugin } from "babel-plugin-solid-undestructure"
 
@@ -20,5 +21,10 @@ export default defineConfig({
     Unocss({
       presets: [presetAttributify(), presetUno()]
     }),
-  ]
+  ],
+  server: { port: 3000 },
+  build: { target: 'esnext' },
+  resolve: {
+    alias: { '~': resolve(__dirname, 'src') }
+  }
 });
