@@ -1,8 +1,9 @@
 import {css} from "solid-styled"
+import {Dynamic} from "solid-js/web";
 
 export default function collapse (props) {
   css`
-    h3 { 
+    .collapse-title { 
       display: inline;
     }
 
@@ -10,7 +11,7 @@ export default function collapse (props) {
       cursor: pointer;
       user-select: none;
 
-      width: 50%;
+      width: 100%;
       margin-bottom: 20px
     }
 
@@ -21,7 +22,15 @@ export default function collapse (props) {
 
   return (
     <details>
-      <summary> <h3>{props.title}</h3> </summary>
+      <summary> 
+        <Dynamic 
+          class="collapse-title" 
+          component={'h'+ (props.h || '3')} 
+          use:solid-styled
+        >
+          {props.title}
+        </Dynamic>
+      </summary>
       <main>
         {props.children}
       </main>

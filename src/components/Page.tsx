@@ -4,7 +4,7 @@ import { css } from "solid-styled"
 export default function page (props) {
   css`
     .page-wrapper {
-      margin: 5% 20%
+      margin: 5% 0 5% 20%
     }
   `
 
