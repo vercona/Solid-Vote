@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import { resolve } from "path"
+import { resolve, dirname } from "path"
 
 import solid from 'vite-plugin-solid';
 import solidStyled from 'vite-plugin-solid-styled';
@@ -34,14 +34,35 @@ export default defineConfig({
 
 
 import JSON5 from 'json5'
+
+import fs from 'fs'
+
+function json5NestedParser(str, path) {
+  let out = str.replaceAll(/:(\s+)?`(.*?)`/g, (match, g1, g2)=>{
+    let file = resolve(dirname(path), g2)
+    
+    let ext = {[''+fs.existsSync(file+'.json')] : '.json',  [''+fs.existsSync(file+'.json5')]: '.json5'}?.['true']
+    if (!ext) throw new Error('No valid extension...')
+    
+    const data = fs.readFileSync(
+      file+ext, {encoding:'utf8', flag:'r'}
+    )
+
+    return ': ' + json5NestedParser(data, ext)
+  })
+
+  return JSON.stringify(JSON5.parse(out))
+}
+
 function parseJSON5() {
   const fileRegex = /\.(json5)$/
   return {
     enforce: 'pre',
     transform(src, id) {
       if (fileRegex.test(id)) {
+        json5NestedParser(src, id)
         return {
-          code: 'export default ' + JSON.stringify(JSON5.parse(src)) ,
+          code: 'export default ' + json5NestedParser(src, id)
           //map: null // provide source map if available
         }
       }

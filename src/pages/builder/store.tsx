@@ -1,5 +1,7 @@
 import { createStore } from "solid-js/store";
-import test from '~/static/algoConfig'
+//import test from '~/static/algoConfig'
+
+import test from '~/static/formConfig'
 
 //import InputConfigs
 //import algorithmConfigs

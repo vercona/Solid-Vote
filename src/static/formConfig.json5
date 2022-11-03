@@ -68,7 +68,7 @@
       {
         label: 'Input Options', type: 'radio',
         // if manual
-        content: `$InputConfigs file ref`
+        content: `./inputConfig`
       },
 
       {
@@ -120,7 +120,7 @@
         content: [ 
           {
             label: 'Algorithms', type: 'radio', 
-            content: `$algorithmConfigs file ref`
+            content: `./algoConfig`
           },
           {
             label: 'Algorithms Config', type: 'config',
