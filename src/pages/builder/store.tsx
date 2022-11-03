@@ -114,11 +114,11 @@ export default function useStore() {
         },
 
         {
-          label: 'Input Limit', type: 'radio',
+          label: 'Input Limit', type: 'radio', // ie vote limit per user
           // if manual
           content: [
-            'unlimited',
-            'limited [input]',
+            'unlimited',        // like reddit
+            'limited [input]',  // 1 = normal vote, n = could be ranked etc.
             'Dynamic [function api(views, submissions, user)]' // some individuals may have diff vote limits
           ]
         },
@@ -274,3 +274,80 @@ export default function useStore() {
 
   // idk what to do for ties etc.
 */ 
+
+
+/*
+I think i need to:
+• flesh-out algorithmConfigs and add inputConfigs
+• assign components to types (aside from star, most inputs are basic html)
+• write frontend code to generate ui (ez)
+• write algorithms to get winners
+• add database to crud data
+
+• simulate submissions and voting to test
+
+• move algorithms and schema to their own repo (share as package, document considerations for database schema) 
+
+
+oh right gotta add validators to both visibility and datatypes
+
+hmm... but if i add validators i lose agnostic value 
+I can valid form inputs i think
+but conditional logic? prob not...
+if thats the case i may as well just target js for now
+so i'll allow functions...
+
+ah! right… i can just use a key to move validators to their own objects and map them
+i can do that l8r tho
+easier to colocate atm
+
+should prob rename upvote simply to vote
+
+idk if managing “can submit”, “can vote” or “vote start” would make sense
+prob not
+
+
+was thinking of both individual vote limits and shared. 
+but ultimately, a shared vote could just be a custom termination condition
+
+im having trouble deciding where to draw the line on what options to provide vs what can be managed externally
+like the vote system could simple wait to receive a “stop” event/callback, to end voting.
+
+then devs could track vote count and emit “stop” via their own system and i don’t have to worry about it. 
+idk there’s a whole api surface area issue i haven’t totally figured out yet
+will probably be easier to solve as i build it
+*/
+
+let t =`
+// 1D map of form input values
+let selection = {
+  [key]: value
+}
+
+let formBuilderSchema = [
+  {
+    key: '',  // maps to selection object for validation (must be unique)
+    label:'', // display name - if applicable
+    type:'',  // type will map to a component
+    content: [/*...*/], // child components, elements, and values
+    show() {},  // given data in selection, is this item visible/disabled
+    validate() {}  // is data in selection, valid for given key?
+  },
+  /*...*/
+]
+
+let algorithmConfigs = {
+  algorithmName: [
+    {
+      key: '',
+      label: '',
+      type: 'range', // componentKey
+      options: {     // input specific options
+        min: 0, max: 10, step: 0.5
+      }
+    },
+    /*...*/
+  ],
+  /*...*/
+}
+`
