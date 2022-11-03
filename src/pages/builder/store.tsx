@@ -4,6 +4,99 @@ import { createStore } from "solid-js/store";
   category: Collapse  // type key => component
 } */
 
+let InputConfigs = [
+  {
+    label: 'vote',
+    type: 'bool' // 0,1
+  },
+  {
+    label: 'up/down-vote',
+    type: 'int' // -1,0,1
+  },
+
+
+  {
+    label: 'Rating',
+    type: 'numeric', // 0 <= numeric
+    settings: [
+      {
+        label: 'max',
+        type: 'text', key: '',
+        // validate > 0
+      },
+      {
+        label: 'step',
+        type: 'text', key: '',
+        // validate range > 0 and <= max
+      }
+    ]
+  },
+  {
+    label: 'Stars',
+    type: 'numeric', // 0 <= numeric <=10
+    settings: [
+      {
+        label: 'max:',
+        type: 'radio', key: '',
+        options: [ // first is default
+          '5',
+          '10'
+        ]
+      },
+      {
+        label: 'step:',
+        type: 'radio', key: '',
+        options: [ // first is default
+          '1',
+          '1/2'
+        ]
+      }
+    ]
+  },
+
+
+  {
+    label: 'Percentage Allocation',
+    type: 'numeric' // 0 < numeric <= 100
+  },
+
+
+  {
+    label: 'ranking', // (ui text input + up down arrow)
+    type: 'int' // 0 < int
+  }, // ^1 entry per rank
+  {
+    label: 'tier lists', // int (may map to fixed set of strings)
+    type: 'int' // 0 < int
+  }, // ^n entries per rank
+
+
+  {
+    label: 'binary comparison',
+    type: 'int',
+    settings: [{
+      label: 'Enable Pass?',
+      type: 'radio', key: '',
+      options: [ // first is default
+        'No', // type bool: 0, 1
+        'Yes' // type int: -1, 0, 1 
+      ]
+    }]
+  },
+
+
+  {
+    label: 'tag vote', // multi-bool (like emote reactions) [custom algorithm]
+    type: 'Array<int>', // corresponds to tag index
+    settings: [{
+      label: 'Tags:',
+      type: 'tagList', key: '',
+    }]
+  }
+
+  // is a free text input too far out of bounds?
+]
+
 let algorithmConfigs = {
   /** 1 Vote, 1 Winner (vote-type: bool) **/
   'unanimous': {
@@ -73,25 +166,15 @@ let algorithmConfigs = {
   },
 
   /* binary comparisons */ // these may benefit special termination conditions (eg: all comparisons covered by at least x people)
-  'win percentage': { // (vote-type: ???)
+  'win percentage': { // (vote-type: bool/int)
     description: 'Whichever has highest win rate by end is the winner.',
-    settings: [
-      {
-        label: 'Enable Pass?',
-        type: 'radio', key: '',
-        options: [ // first is default
-          'No',
-          'Yes'
-        ]
-      }
-    ]
+    settings: []
   },
   'condorcet': { // if submission limit <= 5. (vote-type: bool)
     description: 'compare all binary submission combinations. If ones victories are unanimous, declare winner.',
     settings: []
   }
 }
-
 
 export default function useStore() {
   let form = [
@@ -164,22 +247,7 @@ export default function useStore() {
         {
           label: 'Input Options', type: 'radio',
           // if manual
-          content: [
-            'Upvote',                  // +1/true      int/bool
-            'Upvote/Downvote',         // +1/-1   int
-    
-            'Rating [min, max, step]', // 1 <= numeric, step = 0.5 or 1
-            'Star Rating [5,10]',      // 0 < numeric <=10
-
-            'Percentage Allocation',   // 0 < numeric <= 100
-    
-            'ranking',                 // int (ui text input + up down arrow)
-            'tier lists',              // int (may map to fixed set of strings)
-    
-            'binary comparison',       // bool
-    
-            'tag vote [tags]'          // multi-bool (like emote reactions) [custom algorithm]
-          ]
+          content: `$InputConfigs file ref`
         },
 
         {
@@ -285,17 +353,14 @@ export default function useStore() {
   </Collapse>
 
 
-  // votes weighted by individual? custom algo.
-
   // idk what to do for ties etc.
-*/ 
 
 
-/*
+
 I think i need to:
-  • flesh-out algorithmConfigs and add inputConfigs
   • assign components to types (aside from star, most inputs are basic html)
   • write frontend code to generate ui (ez)
+  • add validators to both visibility and datatypes ( use a key to move validators to their own objects and map them ie like components)
   • write algorithms to get winners
   • add database to crud data
 
@@ -304,59 +369,33 @@ I think i need to:
   • move algorithms and schema to their own repo (share as package, document considerations for database schema) 
 
 
-oh right gotta add validators to both visibility and datatypes
-
-hmm... but if i add validators i lose agnostic value 
-I can valid form inputs i think
-but conditional logic? prob not...
-if thats the case i may as well just target js for now
-so i'll allow functions...
-
-ah! right… i can just use a key to move validators to their own objects and map them
-i can do that l8r tho
-easier to colocate atm
-
-should prob rename upvote simply to vote
-
+explicit submission and vote periods? simultaneous vote and submit?
 idk if managing “can submit”, “can vote” or “vote start” would make sense
 prob not
 
-
-was thinking of both individual vote limits and shared. 
-but ultimately, a shared vote could just be a custom termination condition
-
-im having trouble deciding where to draw the line on what options to provide vs what can be managed externally
-like the vote system could simple wait to receive a “stop” event/callback, to end voting.
-
-then devs could track vote count and emit “stop” via their own system and i don’t have to worry about it. 
-idk there’s a whole api surface area issue i haven’t totally figured out yet
-will probably be easier to solve as i build it
-
+for multiple winners, should they retain "place"/"rank" or should they all be treated equally?
 
 is 100% those who vote or member ship (those who can vote)
 cuz not everyone will vote...
 
 
-ranked winners or equal winners?
-*/
+was thinking of both individual vote limits and shared. 
+but ultimately, a shared vote could just be a custom termination condition
 
-let t =`
-// 1D map of form input values
-let selection = {
-  [key]: value
-}
+
+what options to provide vs what can be managed externally
+like the vote system could simple wait to receive a “stop” event/callback, to end voting.
+then devs could track vote count and emit “stop” via their own system
+
 
 let formBuilderSchema = [
   {
     key: '',  // maps to selection object for validation (must be unique)
     label:'', // display name - if applicable
     type:'',  // type will map to a component
-    content: [/*...*/], // child components, elements, and values
+    content: [], // child components, elements, and values
     show() {},  // given data in selection, is this item visible/disabled
     validate() {}  // is data in selection, valid for given key?
-  },
-  /*...*/
+  }
 ]
-
-
-`
+*/
