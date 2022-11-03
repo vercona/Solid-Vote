@@ -19,5 +19,6 @@ let keySelection = {
 */
 
 export default function useStore() {
+  console.log(formConfig)
   return formConfig
 }

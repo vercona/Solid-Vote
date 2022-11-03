@@ -32,7 +32,7 @@
       {
         label: 'max:',
         type: 'radio', key: '',
-        options: [ // first is default
+        choices: [ // first is default
           '5',
           '10'
         ]
@@ -40,7 +40,7 @@
       {
         label: 'step:',
         type: 'radio', key: '',
-        options: [ // first is default
+        choices: [ // first is default
           '1',
           '1/2'
         ]
@@ -71,7 +71,7 @@
     settings: [{
       label: 'Enable Pass?',
       type: 'radio', key: '',
-      options: [ // first is default
+      choices: [ // first is default
         'No', // type bool: 0, 1
         'Yes' // type int: -1, 0, 1 
       ]

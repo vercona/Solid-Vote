@@ -1,20 +1,23 @@
 //@unocss-ignore
-{
+[
   /** 1 Vote, 1 Winner (vote-type: bool) **/
-  'unanimous': {
+  {
+    label: 'unanimous',
     description: '1 submission must get all votes to win',
     settings: [], // (all = voted or members? what if people don't vote)
   },
-  'Majority rule': {
+  {
+    label: 'Majority rule',
     description: '1 submission gets more than half votes',
     settings: [],
   },
-  'Super Majority': {
+  {
+    label: 'Super Majority',
     description: '1 submission gets more than specified count (50 > input < 100)',
     settings: [
       {
         label: 'percent to pass',
-        type: 'range', key: '',
+        el: 'range', key: '',
         options: { min: 50, max: 100, default: 66.6666 }, // could this be dynamic?
       }
     ]
@@ -22,44 +25,52 @@
 
 
   /** Winner >= 1 winner (vote-type: bool) **/
-  'plurality': { // if 1 vote
+  {
+    label: 'plurality', // if 1 vote
     description: '1 submission, most votes win',
   },
-  'approval voting': { // if vote limit > 1
+  {
+    label:'approval voting', // if vote limit > 1
     description: 'Many submissions, most votes win',
   },
 
 
   /** Ranked Vote (vote-type: int) **/
-  'instant runoff': { // if 1 winner
+  { // if 1 winner
+    label: 'instant runoff',
     description: 'eliminate fewest votes and redistribute till a submission has more than half of votes',
   },
-  'single transferable vote': { // fixed winners > 1
+  { // fixed winners > 1
+    label: 'single transferable vote',
     description: 'redistribute overflow and losers till (100% / winners) hit',
     // does this have to be fixed? could winners be dynamic too?
   },
 
   
   /** Value Modifiers **/
-  'depreciating vote': { // if vote-limit > 1  (vote-type: bool, upvote/downvote compat +1/-1)
+  { // if vote-limit > 1  (vote-type: bool, upvote/downvote compat +1/-1)
+    label: 'depreciating vote',
     description: 'the more votes the less they are worth, uniformly. most votes win.',
   },
-  'weighted random': { // (vote-type: numeric) up/down-vote and rank compat
+  { // (vote-type: numeric) up/down-vote and rank compat
+    label: 'weighted random',
     description: 'vote skews random selection.',
   },
 
 
   /** for rankings (vote-type: int) **/
-  'largest average': {
+  {
+    label: 'largest average',
     description: 'Rank preferences summed and largest divided by number of votes. Largest wins.',
   },
-  'largest mode': {
+  {
+    label: 'largest mode',
     description: 'for each entry, select the most common rank. largest rank with most votes wins.',
     settings: [
       {
         label: 'Count most votes',
-        type: 'radio', key: '',
-        options: [ // first is default
+        el: 'radio', key: '',
+        choices: [ // first is default
           'Count all votes.',
           'Count votes of mode.',
         ]
@@ -68,12 +79,14 @@
   },
 
   /* binary comparisons */ // these may benefit special termination conditions (eg: all comparisons covered by at least x people)
-  'win percentage': { // (vote-type: bool/int)
+  { // (vote-type: bool/int)
+    label: 'win percentage',
     description: 'Whichever has highest win rate by end is the winner.',
     settings: [],
   },
-  'condorcet': { // if submission limit <= 5. (vote-type: bool)
+  { // if submission limit <= 5. (vote-type: bool)
+    label: 'condorcet',
     description: 'compare all binary submission combinations. If ones victories are unanimous, declare winner.',
     settings: [],
   }
-}
+]

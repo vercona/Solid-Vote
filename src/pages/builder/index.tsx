@@ -18,25 +18,27 @@ let componentMap = {
   category: Collapse, // type key => component
   text: props => (<> <label>{props.options.label}:</label> <input type="text"/></>),
   radio: props => (<>
-    <div>radio!</div>
-    <For each={props.options.options}>
-      {(item) => ( <div style="margin-left:10px">{item()}</div> )}
+    <div>{props.options.label}:</div>
+    <For each={props.options.choices}>
+      {(item) => ( <div style="margin-left:10px">• {item()}</div> )}
     </For>
   </>),
+  heading: props => (<h2>{props.label}</h2>),
+  range: props => (<><label>{props.label}</label> <input type="range" min={props.options.min} max={props.options.max} value={props.options.default}/></>)
 }
 
 
 function parseForm(arr) {
+  console.log(arr)
   let componentArr = []
 
   for (let el of arr) {
     let children = []
     if (el.content) {
       children = parseForm(el.content)
-      console.log(children)
     }
 
-    let comp = componentMap[el.type]
+    let comp = componentMap[el.el]
     let foo = <Dynamic component={comp} options={el}> {children} </Dynamic>
     componentArr.push(foo)
   }
@@ -47,8 +49,8 @@ function parseForm(arr) {
 
 
 export default function builder () {
-  //let obj = useStore()
-  let arr = [
+  let arr = useStore()
+  /* let arr = [
     {
       label: 'Submission Settings', type: 'category',
       content: [
@@ -80,8 +82,10 @@ export default function builder () {
       ]
     }
   ]
-
+ */
   return (
-    <Page title="Vote Builder"> {parseForm(arr)} </Page>
+    <Page
+      title="Vote Builder"
+    > {parseForm(arr)} </Page>
   )
 }
