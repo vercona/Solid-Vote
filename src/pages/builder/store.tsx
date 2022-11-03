@@ -5,53 +5,91 @@ import { createStore } from "solid-js/store";
 } */
 
 let algorithmConfigs = {
+  /** 1 Vote, 1 Winner (vote-type: bool) **/
   'unanimous': {
-    // if 1 vote, 1 submission gets all votes (type: bool/int) (all = voted or members? what if people don't vote)
-  },                           
-  'Majority rule':{
-    // if 1 vote, 1 submission gets more than half votes (type: bool/int)
-  },                      
-  'Super Majority {"50 > input < 100"}':{
-    // if 1 vote, 1 submission gets more than specified count (type: bool/int)
-  },  
+    description: '1 submission must get all votes to win',
+    settings: [] // (all = voted or members? what if people don't vote)
+  },
+  'Majority rule': {
+    description: '1 submission gets more than half votes',
+    settings: []
+  },
+  'Super Majority': {
+    description: '1 submission gets more than specified count (50 > input < 100)',
+    settings: [
+      {
+        label: 'percent to pass',
+        type: 'range', key: '',
+        options: { min: 50, max: 100, default: 66.6666 } // could this be dynamic?
+      }
+    ]
+  },
 
-  // allow for multi winner for these 2? 
-  'plurality':{
-    // if 1 vote, most votes win (type: bool/int)
-  },                           
-  'up-vote/score approval voting':{
-    // if vote limit > 1, most votes win (type: bool/int)
-  },       
 
-  'instant runoff':{
-    // if ranked, eliminate fewest votes and redistribute till submission has more than half of votes,  (type: int)
-  },                      
-  'single transferable vote':{
-    // fixed winners, ranked, redistribute overflow and losers till hit (type: int)
-  },           
+  /** Winner >= 1 winner (vote-type: bool) **/
+  'plurality': { // if 1 vote
+    description: '1 submission, most votes win',
+  },
+  'approval voting': { // if vote limit > 1
+    description: 'Many submissions, most votes win',
+  },
+
+
+  /** Ranked Vote (vote-type: int) **/
+  'instant runoff': { // if 1 winner
+    description: 'eliminate fewest votes and redistribute till a submission has more than half of votes',
+  },
+  'single transferable vote': { // fixed winners > 1
+    description: 'redistribute overflow and losers till (100% / winners) hit'
+    // does this have to be fixed? could winners be dynamic too?
+  },
+
   
-  'diminishing/depreciating vote':{
-    // if vote limit > 1, the more votes the less they are worth, uniformly. most votes wins (type: int/bool, upvote/downvote compat +1/-1)
-  },      
-  'weighted random':{
-    // vote skews random selection (type: numeric)
-  },                    
+  /** Value Modifiers **/
+  'depreciating vote': { // if vote-limit > 1  (vote-type: bool, upvote/downvote compat +1/-1)
+    description: 'the more votes the less they are worth, uniformly. most votes win.'
+  },
+  'weighted random': { // (vote-type: numeric) up/down-vote and rank compat
+    description: 'vote skews random selection.',
+  },
 
-  // for rankings
-  'largest average':{
-    // average ranking values and take the top
-  },                 
-  'largest mode':{
-    // mode ranking and take the top
-  },                        
 
-  // for binary comparison
-  'win percentage':{
-    // what ever has highest win rate
-  },                        
-  'condorcet':{
-    // if submission limit <= 5. unanimous winner
-  },                              
+  /** for rankings (vote-type: int) **/
+  'largest average': {
+    description: 'Rank preferences summed and largest divided by number of votes. Largest wins.',
+  },
+  'largest mode': {
+    description: 'for each entry, select the most common rank. largest rank with most votes wins.',
+    settings: [
+      {
+        label: 'Count most votes',
+        type: 'radio', key: '',
+        options: [ // first is default
+          'Count all votes.',
+          'Count votes of mode.'
+        ]
+      }
+    ]
+  },
+
+  /* binary comparisons */ // these may benefit special termination conditions (eg: all comparisons covered by at least x people)
+  'win percentage': { // (vote-type: ???)
+    description: 'Whichever has highest win rate by end is the winner.',
+    settings: [
+      {
+        label: 'Enable Pass?',
+        type: 'radio', key: '',
+        options: [ // first is default
+          'No',
+          'Yes'
+        ]
+      }
+    ]
+  },
+  'condorcet': { // if submission limit <= 5. (vote-type: bool)
+    description: 'compare all binary submission combinations. If ones victories are unanimous, declare winner.',
+    settings: []
+  }
 }
 
 
@@ -193,30 +231,7 @@ export default function useStore() {
           content: [ 
             {
               label: 'Algorithms', type: 'radio', 
-              content: [
-                // These 3 are the same underlying algorithm.
-                'unanimous',                           // if 1 vote, 1 submission gets all votes (type: bool/int) (all = voted or members? what if people don't vote)
-                'Majority rule',                       // if 1 vote, 1 submission gets more than half votes (type: bool/int)
-                'Super Majority {"50 > input < 100"}', // if 1 vote, 1 submission gets more than specified count (type: bool/int)
-
-                // allow for multi winner for these 2? 
-                'plurality',                           // if 1 vote, most votes win (type: bool/int)
-                'up-vote/score approval voting',       // if vote limit > 1, most votes win (type: bool/int)
-
-                'instant runoff',                      // if ranked, eliminate fewest votes and redistribute till submission has more than half of votes,  (type: int)
-                'single transferable vote',            // fixed winners, ranked, redistribute overflow and losers till hit (type: int)
-                
-                'diminishing/depreciating vote',       // if vote limit > 1, the more votes the less they are worth, uniformly. most votes wins (type: int/bool, upvote/downvote compat +1/-1)
-                'weighted random',                     // vote skews random selection (type: numeric)
-
-                // for rankings
-                'largest average',                     // average ranking values and take the top
-                'largest mode',                        // mode ranking and take the top
-
-                // for binary comparison
-                'win percentage',                       // what ever has highest win rate
-                'condorcet'                             // if submission limit <= 5. unanimous winner
-              ]
+              content: `$algorithmConfigs file ref`
             },
             {
               label: 'Algorithms Config', type: 'config',
@@ -278,15 +293,15 @@ export default function useStore() {
 
 /*
 I think i need to:
-• flesh-out algorithmConfigs and add inputConfigs
-• assign components to types (aside from star, most inputs are basic html)
-• write frontend code to generate ui (ez)
-• write algorithms to get winners
-• add database to crud data
+  • flesh-out algorithmConfigs and add inputConfigs
+  • assign components to types (aside from star, most inputs are basic html)
+  • write frontend code to generate ui (ez)
+  • write algorithms to get winners
+  • add database to crud data
 
-• simulate submissions and voting to test
+  • simulate submissions and voting to test
 
-• move algorithms and schema to their own repo (share as package, document considerations for database schema) 
+  • move algorithms and schema to their own repo (share as package, document considerations for database schema) 
 
 
 oh right gotta add validators to both visibility and datatypes
@@ -316,6 +331,13 @@ like the vote system could simple wait to receive a “stop” event/callback, t
 then devs could track vote count and emit “stop” via their own system and i don’t have to worry about it. 
 idk there’s a whole api surface area issue i haven’t totally figured out yet
 will probably be easier to solve as i build it
+
+
+is 100% those who vote or member ship (those who can vote)
+cuz not everyone will vote...
+
+
+ranked winners or equal winners?
 */
 
 let t =`
@@ -336,18 +358,5 @@ let formBuilderSchema = [
   /*...*/
 ]
 
-let algorithmConfigs = {
-  algorithmName: [
-    {
-      key: '',
-      label: '',
-      type: 'range', // componentKey
-      options: {     // input specific options
-        min: 0, max: 10, step: 0.5
-      }
-    },
-    /*...*/
-  ],
-  /*...*/
-}
+
 `
