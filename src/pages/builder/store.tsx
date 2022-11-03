@@ -1,16 +1,14 @@
+//@ts-nocheck
 import { createStore } from "solid-js/store";
-//import test from '~/static/algoConfig'
+import formConfig from '~/static/formConfig'
 
-import test from '~/static/formConfig'
+import Collapse from "~/components/Collapse";
 
-//import InputConfigs
-//import algorithmConfigs
-
-/*
 let componentMap = {
   category: Collapse  // type key => component
 }
 
+/*
 let validMap = {
   key: Collapse  // type key => component
 }
@@ -21,5 +19,5 @@ let keySelection = {
 */
 
 export default function useStore() {
-  console.log(test)
+  return formConfig
 }

@@ -1,81 +1,87 @@
 import './style.scss'
 
-import Collapse from "~/components/Collapse";
 import Page from "~/components/Page";
 
 import useStore from './store'
+import { Dynamic } from 'solid-js/web'
+import { For }  from 'solid-js'
+
+/* interface Form {
+  label: 'Submission Settings',
+  type: 'category',
+  content: [],
+} */
+
+import Collapse from "~/components/Collapse";
+
+let componentMap = {
+  category: Collapse, // type key => component
+  text: props => (<> <label>{props.options.label}:</label> <input type="text"/></>),
+  radio: props => (<>
+    <div>radio!</div>
+    <For each={props.options.options}>
+      {(item) => ( <div style="margin-left:10px">{item()}</div> )}
+    </For>
+  </>),
+}
+
+
+function parseForm(arr) {
+  let componentArr = []
+
+  for (let el of arr) {
+    let children = []
+    if (el.content) {
+      children = parseForm(el.content)
+      console.log(children)
+    }
+
+    let comp = componentMap[el.type]
+    let foo = <Dynamic component={comp} options={el}> {children} </Dynamic>
+    componentArr.push(foo)
+  }
+
+  return componentArr
+}
+
+
 
 export default function builder () {
-  useStore()
+  //let obj = useStore()
+  let arr = [
+    {
+      label: 'Submission Settings', type: 'category',
+      content: [
+        {
+          label: 'Submission Limit', type: 'text',
+        },
+        {
+          label: 'Submission Vitality', type: 'radio',
+          options: [
+            'Expiration',
+            'lock on win'
+          ]
+        }
+      ]
+    },
+
+    {
+      label: 'HMM', type: 'category',
+      content: [
+        {
+          label: 'Deeper!', type: 'category',
+          h: '4',
+          content: [
+            {
+              label: 'another input', type: 'text',
+            }
+          ]
+        },
+      ]
+    }
+  ]
+
   return (
-    <Page title="Vote Builder"> 
-      <div>
-        <Collapse title="Submission" >
-          <Collapse title="Vote Type:" h="4">
-            radio:<br/>
-              • Manual<br/>
-              • Implicit<br/>
-              • External<br/>
-
-            <br/>
-            If Manual: <br/>
-              • Upvote <br/>
-              • Upvote + Downvote <br/>
-
-              • integer Rating [input min,max] <br/>
-              • percentage Allocation <br/>
-              • Star Rating [5,10] <br/>
-
-              • ranking<br/>
-
-              • binary comparison<br/>
-
-              • none (voting not allowed)<br/>
-              • tag vote [tags] (like emote reactions)<br/>
-
-            <br/>
-            If Implicit:<br/>
-              • time interactive/engagement<br/>
-              • view count<br/>
-              • edit count<br/>
-              • comment count<br/>
-              • content
-
-            <br/>
-            If External(/functional?):<br/>
-              • API
-          </Collapse>
-
-          <Collapse title="Vote Limit:" h="4">
-            radio: <br/>
-              • unlimited <br/>
-              • limited [input]<br/>
-              • Dynamic [function api(views, submissions)]<br/>
-          </Collapse>
-
-          <Collapse title="Calculation:" h="4">
-            radio: <br/>
-              • unanimous<br/>
-              • Majority rule<br/>
-              • Super Majority {"50 > input < 100"}<br/>
-              • plurality<br/>
-              • ranked choice / instant runoff<br/>
-              • up-vote/score approval voting <br/>
-              • deprecating vote (the more you vote the less they are worth, uniformly)<br/>
-              • weighted random<br/>
-              • single transferable vote<br/>
-          </Collapse>
-          
-        </Collapse>
-
-        <Collapse title="Edit Level">
-          <p>Inherit Submission Level</p>
-        </Collapse>
-
-        <Collapse title="Comment Level">
-          <p>Inherit Submission Level</p>
-        </Collapse>
-      </div>
-    </Page>
+    <Page title="Vote Builder"> {parseForm(arr)} </Page>
   )
 }
