@@ -1,0 +1,92 @@
+[
+  {
+    label: 'vote',
+    type: 'bool', // 0,1
+  },
+  {
+    label: 'up/down-vote',
+    type: 'int', // -1,0,1
+  },
+
+
+  {
+    label: 'Rating',
+    type: 'numeric', // 0 <= numeric
+    settings: [
+      {
+        label: 'max',
+        type: 'text', key: '',
+        // validate > 0
+      },
+      {
+        label: 'step',
+        type: 'text', key: '',
+        // validate range > 0 and <= max
+      }
+    ]
+  },
+  {
+    label: 'Stars',
+    type: 'numeric', // 0 <= numeric <=10
+    settings: [
+      {
+        label: 'max:',
+        type: 'radio', key: '',
+        options: [ // first is default
+          '5',
+          '10'
+        ]
+      },
+      {
+        label: 'step:',
+        type: 'radio', key: '',
+        options: [ // first is default
+          '1',
+          '1/2'
+        ]
+      }
+    ]
+  },
+
+
+  {
+    label: 'Percentage Allocation',
+    type: 'numeric', // 0 < numeric <= 100
+  },
+
+
+  {
+    label: 'ranking', // (ui text input + up down arrow)
+    type: 'int', // 0 < int
+  }, // ^1 entry per rank
+  {
+    label: 'tier lists', // int (may map to fixed set of strings)
+    type: 'int', // 0 < int
+  }, // ^n entries per rank
+
+
+  {
+    label: 'binary comparison',
+    type: 'int',
+    settings: [{
+      label: 'Enable Pass?',
+      type: 'radio', key: '',
+      options: [ // first is default
+        'No', // type bool: 0, 1
+        'Yes' // type int: -1, 0, 1 
+      ]
+    }]
+  },
+
+
+  {
+    label: 'tag vote', // multi-bool (like emote reactions) [custom algorithm]
+    type: 'Array<int>', // corresponds to tag index
+    settings: [{
+      label: 'Tags:',
+      type: 'tagList', key: '',
+    }]
+  }
+
+  // is a free text input too far out of bounds?
+]

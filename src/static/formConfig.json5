@@ -1,0 +1,153 @@
+[
+  {
+    label: 'Core Setting', type: 'heading',
+    content: [ 
+      {
+        label: 'Termination Condition', type: 'radio',
+        content: [
+          'none',                    // Continuos
+          'Fixed Duration',          // Has time based end
+          'Conditional Termination', // Condition based end (self api?)
+          'Vote limit'               // fixed amount of votes available. Doesn't end till they run out
+        ]
+      },
+      
+      {
+        label: 'Win Count', type: 'radio',
+        content: [
+          { 
+            label: 'Fixed Winners',  
+            type: 'range',     // min or max threshold (will terminate vote if condition set w/ threshold, or will calculate in post)
+          },
+          'Unlimited Winners', // No limit to number of winners, continuous or in post
+          'No Winners'         // People can rank and vote, but no events or states will denote winners (like reddit)
+        ]
+      }
+    ]
+  },
+
+  {
+    label: 'Submission Settings', type: 'category',
+    content: [
+      {
+        label: 'Submission Limit', type: 'input',
+      },
+      {
+        label: 'Submission Vitality', type: 'radio',
+        content: [
+          'Expiration',
+          'lock on win'  // if continuous (otherwise winners are calculated in post)
+        ]
+      }
+    ]
+  },
+
+  {
+    label: 'Voting', type: 'category',
+    content: [
+      {
+        label: 'Vote Type', type: 'radio',
+        content: [
+          'Manual',     // users have a vote interface
+          'Implicit',   // submission-properties api used (view count etc.)
+          'External',   // some other api use to determine winners
+          'Random',     // Winner(s) selected at random
+        ]
+      },
+
+      {
+        label: 'Input Limit', type: 'radio', // ie vote limit per user
+        // if manual
+        content: [
+          'unlimited',        // like reddit
+          'limited [input]',  // 1 = normal vote, n = could be ranked etc.
+          'Dynamic [function api(views, submissions, user)]' // some individuals may have diff vote limits
+        ]
+      },
+
+      {
+        label: 'Input Options', type: 'radio',
+        // if manual
+        content: `$InputConfigs file ref`
+      },
+
+      {
+        label: 'Input Config', type: 'config',
+        // if Input has config option
+        // Input specific config options 
+      },
+
+      {
+        label: 'Implicit Options', type: 'radio',
+          // if implicit (may need api and callback bs cuz this is pretty project specific)
+          // maybe checkbox, multiple values could be relevant
+          // or just use have custom function with these exposed via api.
+        content: [
+          'time interactive/engagement',
+          'view count',
+          'edit count',
+          'comment count',
+          'content',
+        ]
+      },
+  
+      {
+        label: 'External Options', type: 'category',
+        // if external: connects to external api...
+        content: [ ]
+      }
+    ]
+  },
+
+
+  {
+    label: 'Calculation', type: 'category',
+    content: [
+      {
+        label: 'Calculation Type', type: 'category',
+        content: [
+          'Provided',  // use one of our provided methods 
+          'External',  // some other api use to determine winners
+          'Custom',    // pass callback function
+          'threshold'  // If Continuos && (Fixed Winners or Unlimited Winners)
+          // if threshold reached, add winner (freeze or continue to allow voting? post-win-event handling?)
+        ]
+      },
+    
+      {
+        label: 'Provided', type: 'category',
+        // if Provided. perhaps use type matching for first pass simple validation
+        content: [ 
+          {
+            label: 'Algorithms', type: 'radio', 
+            content: `$algorithmConfigs file ref`
+          },
+          {
+            label: 'Algorithms Config', type: 'config',
+            // if Provided. perhaps use type matching for first pass simple validation
+            // algorithm specific config options 
+          }
+        ]
+      },
+
+      { 
+        label: 'Threshold', type: 'category',
+        // if Threshold.
+        content: [
+          {
+            label: 'Threshold Algorithms', type: 'radio', 
+            content: [
+              'barrier to entry', // minimum threshold value to be added to "winners" (numeric)
+            ]
+          }            
+        ]
+      }
+
+      /* 
+        idk what these are gonna look like yet
+        { label: 'External'  },
+        { label: 'Custom'    }
+      */
+    ]
+  }
+]

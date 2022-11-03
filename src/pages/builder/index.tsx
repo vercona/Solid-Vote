@@ -3,7 +3,10 @@ import './style.scss'
 import Collapse from "~/components/Collapse";
 import Page from "~/components/Page";
 
+import useStore from './store'
+
 export default function builder () {
+  useStore()
   return (
     <Page title="Vote Builder"> 
       <div>
