@@ -9,7 +9,7 @@ let componentMap = {
   category: Collapse,
   radio: Radio,
 
-  text: props => (<> <label>{props.options.label}:</label> <input type="text"/></>),
+  text: props => (<> <label>{props.options.label}:</label> <input type="text"/><br/></>),
   range: props => (<>
     <label>{props.options.label}:</label>
     <input
