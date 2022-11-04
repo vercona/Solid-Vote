@@ -29,9 +29,11 @@ export default function radio (props) {
       </For>
       <br/>
       <Show when={selected().settings && selected().settings.length > 0} >
-        <strong>Settings:</strong>
-        <div>
-          {formParser(selected().settings)}
+        <div style="margin-left: 10px">
+          <strong>Settings:</strong>
+          <div style="margin-left: 10px">
+            {formParser(selected().settings)}
+          </div>
         </div>
       </Show>
     </details>

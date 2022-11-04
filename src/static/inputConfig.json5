@@ -30,7 +30,7 @@
     type: 'numeric', // 0 <= numeric <=10
     settings: [
       {
-        label: 'max:',
+        label: 'max',
         el: 'radio', key: '',
         choices: [ // first is default
           '5',
@@ -38,7 +38,7 @@
         ]
       },
       {
-        label: 'step:',
+        label: 'step',
         el: 'radio', key: '',
         choices: [ // first is default
           '1',
