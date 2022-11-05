@@ -92,9 +92,9 @@
       },
   
       {
-        label: 'External Options', el: 'category',
+        label: 'External Options', el: 'radio',
         // if external: connects to external api...
-        content: [ ]
+        choices: []
       }
     ]
   },
@@ -104,8 +104,8 @@
     label: 'Calculation', el: 'category',
     content: [
       {
-        label: 'Calculation Type', el: 'category',
-        content: [
+        label: 'Calculation Type', el: 'radio',
+        choices: [
           'Provided',  // use one of our provided methods 
           'External',  // some other api use to determine winners
           'Custom',    // pass callback function

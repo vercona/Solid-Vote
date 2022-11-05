@@ -6,7 +6,7 @@ import formParser from '~/use/formParser'
 
 export default function radio (props) {
   // will link state to global store l8r
-  let [selected, setSelected] = createSignal(props.options.choices[0]) // first option is default (if-applicable)
+  let [selected, setSelected] = createSignal(props?.options?.choices?.[0] || {}) // first option is default (if-applicable)
 
   return (<>
     <details>
@@ -22,7 +22,11 @@ export default function radio (props) {
                 type="radio" id={key+index} name={key}
                 checked={selected()===item || selected().label===item}
               />
-              <label> {label}</label> <br/>
+              <label>{label}</label> 
+              <Show when={item?.description}>
+                <i style="display: inline"> – {item.description} </i>
+              </Show>
+              <br/>
             </div>
           )
         }}
