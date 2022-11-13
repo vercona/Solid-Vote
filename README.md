@@ -65,4 +65,34 @@ let formBuilderSchema = [
     validate() {}  // is data in selection, valid for given key?
   }
 ]
-*/
+
+
+vote timeout
+
+similar input aggregation
+
+most submitted vote
+
+replace entirety of voting app with custom plugin if needs not satisfied
+
+live vote count
+
+roles who can submit vs who can vote
+
+moderator - accept to sub to enable voting
+
+maintainer - controls what makes it or not
+
+manual events vs recurring, scheduled events.
+
+elimination voting
+
+submission exportation
+
+rfc's (request for comments)
+
+how to handle live vote view, if at all
+
+can inly see votes after submit
+can only vote if has submitted
+selection locked after vote: “no take backsies”
