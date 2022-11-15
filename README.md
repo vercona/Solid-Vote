@@ -96,3 +96,7 @@ how to handle live vote view, if at all
 can inly see votes after submit
 can only vote if has submitted
 selection locked after vote: “no take backsies”
+
+multiRate: eg, rating multiple qualities of something. say a story where you are rating character, plot, etc
+
+spectrum rating: for polar rating  simple<==>complex
