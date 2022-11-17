@@ -100,3 +100,5 @@ selection locked after vote: “no take backsies”
 multiRate: eg, rating multiple qualities of something. say a story where you are rating character, plot, etc
 
 spectrum rating: for polar rating  simple<==>complex
+
+ability to Veto
