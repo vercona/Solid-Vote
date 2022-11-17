@@ -7,12 +7,12 @@
     settings: [], // (all = voted or members? what if people don't vote)
   },
   {
-    label: 'Majority rule',
+    label: 'majority rule',
     description: '1 submission gets more than half votes',
     settings: [],
   },
   {
-    label: 'Super Majority',
+    label: 'super majority',
     description: '1 submission gets more than specified count (50 > input < 100)',
     settings: [
       {
@@ -31,7 +31,7 @@
   },
   {
     label:'approval voting', // if vote limit > 1
-    description: 'Many submissions, most votes win',
+    description: 'many submissions, most votes win',
   },
 
 
@@ -61,18 +61,18 @@
   /** for rankings (vote-type: int) **/
   {
     label: 'largest average',
-    description: 'Rank preferences summed and largest divided by number of votes. Largest wins.',
+    description: 'rank preferences summed and largest divided by number of votes. largest wins.',
   },
   {
     label: 'largest mode',
     description: 'for each entry, select the most common rank. largest rank with most votes wins.',
     settings: [
       {
-        label: 'Count most votes',
+        label: 'count most votes',
         el: 'radio', key: '',
         choices: [ // first is default
-          'Count all votes.',
-          'Count votes of mode.',
+          'count all votes.',
+          'count votes of mode.',
         ]
       }
     ]
@@ -81,12 +81,12 @@
   /* binary comparisons */ // these may benefit special termination conditions (eg: all comparisons covered by at least x people)
   { // (vote-type: bool/int)
     label: 'win percentage',
-    description: 'Whichever has highest win rate by end is the winner.',
+    description: 'whichever has highest win rate by end is the winner.',
     settings: [],
   },
   { // if submission limit <= 5. (vote-type: bool)
     label: 'condorcet',
-    description: 'compare all binary submission combinations. If ones victories are unanimous, declare winner.',
+    description: 'compare all binary submission combinations. if ones victories are unanimous, declare winner.',
     settings: [],
   }
 ]

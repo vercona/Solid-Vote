@@ -1,41 +1,41 @@
 [
   {
-    label: 'Core Setting', el: 'category',
+    label: 'core setting', el: 'category',
     content: [ 
       {
-        label: 'Termination Condition', el: 'radio',
+        label: 'termination condition', el: 'radio',
         choices: [
           'none',                    // Continuos
-          'Fixed Duration',          // Has time based end
-          'Conditional Termination', // Condition based end (self api?)
-          'Vote limit'               // fixed amount of votes available. Doesn't end till they run out
+          'fixed duration',          // Has time based end
+          'conditional termination', // Condition based end (self api?)
+          'vote limit'               // fixed amount of votes available. Doesn't end till they run out
         ]
       },
       
       {
-        label: 'Win Count', el: 'radio',
+        label: 'win count', el: 'radio',
         choices: [
           { 
-            label: 'Fixed Winners',  
+            label: 'fixed winners',  
             el: 'range',     // min or max threshold (will terminate vote if condition set w/ threshold, or will calculate in post)
           },
-          'Unlimited Winners', // No limit to number of winners, continuous or in post
-          'No Winners'         // People can rank and vote, but no events or states will denote winners (like reddit)
+          'unlimited winners', // No limit to number of winners, continuous or in post
+          'no winners'         // People can rank and vote, but no events or states will denote winners (like reddit)
         ]
       }
     ]
   },
 
   {
-    label: 'Submission Settings', el: 'category',
+    label: 'submission settings', el: 'category',
     content: [
       {
-        label: 'Submission Limit', el: 'text',
+        label: 'submission limit', el: 'text',
       },
       {
-        label: 'Submission Vitality', el: 'radio',
+        label: 'submission vitality', el: 'radio',
         choices: [
-          'Expiration',
+          'expiration',
           'freeze on win'  // if continuous (otherwise winners are calculated in post)
         ]
       }
@@ -43,42 +43,42 @@
   },
 
   {
-    label: 'Voting', el: 'category',
+    label: 'voting', el: 'category',
     content: [
       {
-        label: 'Vote Type', el: 'radio',
+        label: 'vote type', el: 'radio',
         choices: [
-          'Manual',     // users have a vote interface
-          'Implicit',   // submission-properties api used (view count etc.)
-          'External',   // some other api use to determine winners
-          'Random',     // Winner(s) selected at random
+          'manual',     // users have a vote interface
+          'implicit',   // submission-properties api used (view count etc.)
+          'external',   // some other api use to determine winners
+          'random',     // winner(s) selected at random
         ]
       },
 
       {
-        label: 'Input Limit', el: 'radio', // ie vote limit per user
+        label: 'input limit', el: 'radio', // ie vote limit per user
         // if manual
         choices: [
           'unlimited',        // like reddit
           'limited [input]',  // 1 = normal vote, n = could be ranked etc.
-          'Dynamic [function api(views, submissions, user)]' // some individuals may have diff vote limits
+          'dynamic [function api(views, submissions, user)]' // some individuals may have diff vote limits
         ]
       },
 
       {
-        label: 'Input Options', el: 'radio',
+        label: 'input options', el: 'radio',
         // if manual
         choices: `./inputConfig`
       },
 
       /* {
-        label: 'Input Config', el: 'config',
-        // if Input has config option
-        // Input specific config options 
+        label: 'input config', el: 'config',
+        // if input has config option
+        // input specific config options 
       }, */
 
       {
-        label: 'Implicit Options', el: 'radio',
+        label: 'implicit options', el: 'radio',
           // if implicit (may need api and callback bs cuz this is pretty project specific)
           // maybe checkbox, multiple values could be relevant
           // or just use have custom function with these exposed via api.
@@ -92,7 +92,7 @@
       },
   
       {
-        label: 'External Options', el: 'radio',
+        label: 'external options', el: 'radio',
         // if external: connects to external api...
         choices: []
       }
@@ -101,29 +101,29 @@
 
 
   {
-    label: 'Calculation', el: 'category',
+    label: 'calculation', el: 'category',
     content: [
       {
-        label: 'Calculation Type', el: 'radio',
+        label: 'calculation type', el: 'radio',
         choices: [
-          'Provided',  // use one of our provided methods 
-          'External',  // some other api use to determine winners
-          'Custom',    // pass callback function
+          'provided',  // use one of our provided methods 
+          'external',  // some other api use to determine winners
+          'custom',    // pass callback function
           'threshold'  // If Continuos && (Fixed Winners or Unlimited Winners)
           // if threshold reached, add winner (freeze or continue to allow voting? post-win-event handling?)
         ]
       },
     
       {
-        label: 'Provided', el: 'category',
+        label: 'provided', el: 'category',
         // if Provided. perhaps use type matching for first pass simple validation
         content: [ 
           {
-            label: 'Algorithms', el: 'radio', 
+            label: 'algorithms', el: 'radio', 
             choices: `./algoConfig`
           },
           /* {
-            label: 'Algorithms Config', type: 'config',
+            label: 'algorithms config', type: 'config',
             // if Provided. perhaps use type matching for first pass simple validation
             // algorithm specific config options 
           } */
@@ -131,11 +131,11 @@
       },
 
       { 
-        label: 'Threshold', el: 'category',
+        label: 'threshold', el: 'category',
         // if Threshold.
         content: [
           {
-            label: 'Threshold Algorithms', el: 'radio', 
+            label: 'threshold algorithms', el: 'radio', 
             choices: [
               'barrier to entry', // minimum threshold value to be added to "winners" (numeric)
             ]
@@ -145,8 +145,8 @@
 
       /* 
         idk what these are gonna look like yet
-        { label: 'External'  },
-        { label: 'Custom'    }
+        { label: 'external'  },
+        { label: 'custom'    }
       */
     ]
   }

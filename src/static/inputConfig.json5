@@ -10,7 +10,7 @@
 
 
   {
-    label: 'Rating',
+    label: 'rating',
     type: 'numeric', // 0 <= numeric
     settings: [
       {
@@ -26,7 +26,7 @@
     ]
   },
   {
-    label: 'Stars',
+    label: 'stars',
     type: 'numeric', // 0 <= numeric <=10
     settings: [
       {
@@ -50,7 +50,7 @@
 
 
   {
-    label: 'Percentage Allocation',
+    label: 'percentage allocation',
     type: 'numeric', // 0 < numeric <= 100
   },
 
@@ -69,11 +69,11 @@
     label: 'binary comparison',
     type: 'int',
     settings: [{
-      label: 'Enable Pass?',
+      label: 'enable pass?',
       el: 'radio', key: '',
       choices: [ // first is default
-        'No', // type bool: 0, 1
-        'Yes' // type int: -1, 0, 1 
+        'no', // type bool: 0, 1
+        'yes' // type int: -1, 0, 1 
       ]
     }]
   },
@@ -81,9 +81,9 @@
 
   {
     label: 'tag vote', // multi-bool (like emote reactions) [custom algorithm]
-    type: 'Array<int>', // corresponds to tag index
+    type: 'array<int>', // corresponds to tag index
     settings: [{
-      label: 'Tags:',
+      label: 'tags:',
       el: 'tagList', key: '',
     }]
   }
