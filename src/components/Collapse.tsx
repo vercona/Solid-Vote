@@ -25,7 +25,7 @@ export default function collapse (props) {
       <summary> 
         <Dynamic 
           class="collapse-title" 
-          component={'h'+ (props.options.h || '3')} 
+          component={'h'+ (props.options?.h || '3')} 
           use:solid-styled
         >
           {props.options.label}

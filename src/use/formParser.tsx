@@ -4,26 +4,18 @@ import { Dynamic } from 'solid-js/web'
 
 import Collapse from "~/components/Collapse";
 import Radio from "~/components/Radio";
+import Range from "~/components/Range";
+import Text from "~/components/Text";
 
 let componentMap = {
   category: Collapse,
-  radio: Radio,
-
-  text: props => (<> <label>{props.options.label}:</label> <input type="text"/><br/></>),
-  range: props => (<>
-    <label>{props.options.label}:</label>
-    <input
-      type="range" min={props.options.state.min} max={props.options.state.max} value={props.options.state.default} 
-      oninput="this.nextElementSibling.value = this.value"
-    />
-    <input type="text" value={props.options.state.default}
-    oninput="this.previousElementSibling.value = this.value"/>
-  </>)
+  radio:    Radio,
+  text:     Text,
+  range:    Range
 }
 
 
 export default function formParser(arr) {
-  console.log(arr)
   let componentArr = []
 
   for (let el of arr) {

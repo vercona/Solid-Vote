@@ -1,12 +1,6 @@
 //@ts-nocheck
-import { createStore } from "solid-js/store";
 import formConfig from '~/static/formConfig'
 
-import Collapse from "~/components/Collapse";
-
-let componentMap = {
-  category: Collapse  // type key => component
-}
 
 /*
 let validMap = {
