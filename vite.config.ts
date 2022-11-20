@@ -80,28 +80,36 @@ async function strModule(src) {
   return mod
 }
 
-let keyArr = []
-function traverse(objArr) {
-  let normal = Object.entries(objArr)
+function traverse(objArr, keyArr=[]) {
+  let normal = Object.entries(objArr) as any
   for(let [k,v] of normal) {
     if (k === 'key') {
+      if (k in keyArr) {
+        throw new Error(`Duplicate Key (${k}) Found On: ${normal?.label || JSON.stringify(normal)}`)
+      }
       keyArr.push(v)
     } else 
     if (typeof v === 'object') {
-      traverse(v)
+      keyArr = traverse(v, keyArr)
     }
   }
+  return keyArr
 }
 
 function genKeyArr(fileArr = ['formConfig']) {
   const fileRegex = new RegExp(`(${fileArr.join('|')}).json5$`)
+  let keyArr = []
   return {
     enforce: 'pre',
     async transform(src, id) {
       if (fileRegex.test(id)) {
         let arr = (await strModule(src)).default
-        traverse(arr)
-        console.log( keyArr )
+        keyArr = traverse(arr, keyArr)
+       
+        await fs.writeFile("src/static/keyArr.json", JSON.stringify(keyArr, null, 2), (err) => {
+          if (err) throw err;
+          console.log('keyArr updated.');
+        })
       }
     }
   }

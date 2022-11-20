@@ -1,0 +1,22 @@
+[
+  "cond-end",
+  "limit-win",
+  "opt-range-limit-win",
+  "limit-sub",
+  "cond-sub-life",
+  "type-vote",
+  "limit-input",
+  "type-manual-input",
+  "opt-text-rating-max",
+  "opt-text-rating-step",
+  "opt-radio-stars-max",
+  "opt-radio-stars-step",
+  "opt-radio-binary-pass",
+  "config-implicit-input",
+  "extern-input",
+  "type-calc",
+  "type-provided-algo",
+  "opt-range-majority-thresh",
+  "opt-radio-mode-count-algo",
+  "type-threshold-algo"
+]
