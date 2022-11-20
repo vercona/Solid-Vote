@@ -4,20 +4,20 @@
   {
     label: 'unanimous',
     description: '1 submission must get all votes to win',
-    settings: [], // (all = voted or members? what if people don't vote)
+    //settings: [], // (all = voted or members? what if people don't vote)
   },
   {
     label: 'majority rule',
     description: '1 submission gets more than half votes',
-    settings: [],
+    //settings: [],
   },
   {
     label: 'super majority',
     description: '1 submission gets more than specified count (50 > input < 100)',
     settings: [
       {
-        label: 'percent to pass',
-        el: 'range', key: '',
+        label: 'percent to pass', el: 'range', key: '',
+        key: 'opt-range-majority-thresh',
         state: { min: '50', max: '100', default: '66.6666' }, // could this be dynamic?
       }
     ]
@@ -68,8 +68,8 @@
     description: 'for each entry, select the most common rank. largest rank with most votes wins.',
     settings: [
       {
-        label: 'count most votes',
-        el: 'radio', key: '',
+        label: 'count most votes', el: 'radio', key: '',
+        key: 'opt-radio-mode-count-algo',
         choices: [ // first is default
           'count all votes.',
           'count votes of mode.',
@@ -82,11 +82,11 @@
   { // (vote-type: bool/int)
     label: 'win percentage',
     description: 'whichever has highest win rate by end is the winner.',
-    settings: [],
+    //settings: [],
   },
   { // if submission limit <= 5. (vote-type: bool)
     label: 'condorcet',
     description: 'compare all binary submission combinations. if ones victories are unanimous, declare winner.',
-    settings: [],
+    //settings: [],
   }
 ]

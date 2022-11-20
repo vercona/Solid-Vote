@@ -102,3 +102,5 @@ multiRate: eg, rating multiple qualities of something. say a story where you are
 spectrum rating: for polar rating  simple<==>complex
 
 ability to Veto
+
+what if you want 2 winners via two diff algos? e.g. i want he mean and mode

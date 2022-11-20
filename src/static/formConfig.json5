@@ -1,9 +1,20 @@
+/*
+Key Key:
+• cond - controls lifetime or existance
+• limit - controls quanitiy (mostly range and text(num) inputs)
+• type - single-choice among options primarliy concerned with catagory (mostly radios)
+• config - multi-choice options (mostly checks)
+• extern - some external setting, tbd
+• opt-[inputType] - deep option key, usually setting of radio or check
+*/
+
 [
   {
     label: 'core setting', el: 'category',
     content: [ 
       {
         label: 'termination condition', el: 'radio',
+        key: 'cond-end',
         choices: [
           'none',                    // Continuos
           'fixed duration',          // Has time based end
@@ -13,11 +24,12 @@
       },
       
       {
-        label: 'win count', el: 'radio',
+        label: 'win limit', el: 'radio',
+        key: 'limit-win',
         choices: [
           { 
-            label: 'fixed winners',  
-            el: 'range',     // min or max threshold (will terminate vote if condition set w/ threshold, or will calculate in post)
+            label: 'fixed winners', el: 'range',     // min or max threshold (will terminate vote if condition set w/ threshold, or will calculate in post)
+            key: 'opt-range-limit-win'
           },
           'unlimited winners', // No limit to number of winners, continuous or in post
           'no winners'         // People can rank and vote, but no events or states will denote winners (like reddit)
@@ -31,10 +43,13 @@
     content: [
       {
         label: 'submission limit', el: 'text',
+        key: 'limit-sub',
       },
       {
         label: 'submission vitality', el: 'radio',
+        key: 'cond-sub-life',
         choices: [
+          'vote end',
           'expiration',
           'freeze on win'  // if continuous (otherwise winners are calculated in post)
         ]
@@ -47,6 +62,7 @@
     content: [
       {
         label: 'vote type', el: 'radio',
+        key: 'type-vote',
         choices: [
           'manual',     // users have a vote interface
           'implicit',   // submission-properties api used (view count etc.)
@@ -57,6 +73,7 @@
 
       {
         label: 'input limit', el: 'radio', // ie vote limit per user
+        key: 'limit-input',
         // if manual
         choices: [
           'unlimited',        // like reddit
@@ -67,6 +84,7 @@
 
       {
         label: 'input options', el: 'radio',
+        key: 'type-manual-input',
         // if manual
         choices: `./inputConfig`
       },
@@ -78,7 +96,8 @@
       }, */
 
       {
-        label: 'implicit options', el: 'radio',
+        label: 'implicit options', el: 'check',
+        key: 'config-implicit-input',
           // if implicit (may need api and callback bs cuz this is pretty project specific)
           // maybe checkbox, multiple values could be relevant
           // or just use have custom function with these exposed via api.
@@ -93,6 +112,7 @@
   
       {
         label: 'external options', el: 'radio',
+        key: 'extern-input',
         // if external: connects to external api...
         choices: []
       }
@@ -105,6 +125,7 @@
     content: [
       {
         label: 'calculation type', el: 'radio',
+        key: 'type-calc',
         choices: [
           'provided',  // use one of our provided methods 
           'external',  // some other api use to determine winners
@@ -120,6 +141,7 @@
         content: [ 
           {
             label: 'algorithms', el: 'radio', 
+            key: 'type-provided-algo',
             choices: `./algoConfig`
           },
           /* {
@@ -136,6 +158,7 @@
         content: [
           {
             label: 'threshold algorithms', el: 'radio', 
+            key: 'type-threshold-algo',
             choices: [
               'barrier to entry', // minimum threshold value to be added to "winners" (numeric)
             ]

@@ -14,13 +14,13 @@
     type: 'numeric', // 0 <= numeric
     settings: [
       {
-        label: 'max',
-        el: 'text', key: '',
+        label: 'max', el: 'text',
+        key: 'opt-text-rating-max',
         // validate > 0
       },
       {
-        label: 'step',
-        el: 'text', key: '',
+        label: 'step', el: 'text',
+        key: 'opt-text-rating-step',
         // validate range > 0 and <= max
       }
     ]
@@ -30,16 +30,16 @@
     type: 'numeric', // 0 <= numeric <=10
     settings: [
       {
-        label: 'max',
-        el: 'radio', key: '',
+        label: 'max', el: 'radio',
+        key: 'opt-radio-stars-max',
         choices: [ // first is default
           '5',
           '10'
         ]
       },
       {
-        label: 'step',
-        el: 'radio', key: '',
+        label: 'step', el: 'radio',
+        key: 'opt-radio-stars-step',
         choices: [ // first is default
           '1',
           '1/2'
@@ -69,8 +69,8 @@
     label: 'binary comparison',
     type: 'int',
     settings: [{
-      label: 'enable pass?',
-      el: 'radio', key: '',
+      label: 'enable pass?', el: 'radio',
+      key: 'opt-radio-binary-pass',
       choices: [ // first is default
         'no', // type bool: 0, 1
         'yes' // type int: -1, 0, 1 
@@ -83,8 +83,8 @@
     label: 'tag vote', // multi-bool (like emote reactions) [custom algorithm]
     type: 'array<int>', // corresponds to tag index
     settings: [{
-      label: 'tags:',
-      el: 'tagList', key: '',
+      label: 'tags:', el: 'tagList',
+      //key: 'opt-radio-binary-pass',
     }]
   }
 
