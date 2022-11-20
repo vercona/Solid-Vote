@@ -1,5 +1,4 @@
 import {css} from "solid-styled"
-import {Dynamic} from "solid-js/web";
 
 import {createSignal, For, Show} from "solid-js";
 import formParser from '~/use/formParser'
