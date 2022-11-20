@@ -10,7 +10,9 @@ import { presetAttributify, presetUno } from 'unocss'
 
 export default defineConfig({
   plugins: [
-    parseJSON5(),
+    parseJSON5(), genKeyArr(), 
+    // genKeyArr must follow parseJSON5
+
     ...undestructurePlugin('ts'),
     solid(),
     solidStyled({
@@ -20,8 +22,7 @@ export default defineConfig({
       },
     }),
     Unocss({
-      presets: [presetAttributify(), presetUno()],
-
+      presets: [presetAttributify(), presetUno()]
     }),
   ],
   server: { port: 3000 },
@@ -33,11 +34,13 @@ export default defineConfig({
 });
 
 
-import JSON5 from 'json5'
 
+
+import JSON5 from 'json5'
 import fs from 'fs'
 
 function json5NestedParser(str, path) {
+  // Note - could be improved by caching already read parsed schema in the event of re-use.
   let out = str.replaceAll(/:(\s+)?`(.*?)`/g, (match, g1, g2)=>{
     let file = resolve(dirname(path), g2)
     
@@ -69,3 +72,41 @@ function parseJSON5() {
     }
   }
 }
+
+
+
+async function strModule(src) {
+  let mod = await import(`data:text/javascript,${encodeURIComponent(src)}`)
+  return mod
+}
+
+let keyArr = []
+function traverse(objArr) {
+  let normal = Object.entries(objArr)
+  for(let [k,v] of normal) {
+    if (k === 'key') {
+      keyArr.push(v)
+    } else 
+    if (typeof v === 'object') {
+      traverse(v)
+    }
+  }
+}
+
+function genKeyArr(fileArr = ['formConfig']) {
+  const fileRegex = new RegExp(`(${fileArr.join('|')}).json5$`)
+  return {
+    enforce: 'pre',
+    async transform(src, id) {
+      if (fileRegex.test(id)) {
+        let arr = (await strModule(src)).default
+        traverse(arr)
+        console.log( keyArr )
+      }
+    }
+  }
+}
+
+
+
+
