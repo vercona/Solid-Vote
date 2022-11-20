@@ -10,7 +10,7 @@ import { presetAttributify, presetUno } from 'unocss'
 
 export default defineConfig({
   plugins: [
-    parseJSON5(), genKeyArr(), 
+    parseJSON5(), genKeyArr(/^key$/), genKeyArr('show', ['formConfig'], 'showArr'),
     // genKeyArr must follow parseJSON5
 
     ...undestructurePlugin('ts'),
@@ -80,23 +80,24 @@ async function strModule(src) {
   return mod
 }
 
-function traverse(objArr, keyArr=[]) {
+function traverse(objArr, keyArr=[], key:string|RegExp='key') {
   let normal = Object.entries(objArr) as any
   for(let [k,v] of normal) {
-    if (k === 'key') {
+    if (k.match(key)?.[0]) { // could be a little risky
       if (k in keyArr) {
+        // no real benefit using set as i hope to catch all dupes anyway. but, may be good for clarity.
         throw new Error(`Duplicate Key (${k}) Found On: ${normal?.label || JSON.stringify(normal)}`)
       }
       keyArr.push(v)
     } else 
     if (typeof v === 'object') {
-      keyArr = traverse(v, keyArr)
+      keyArr = traverse(v, keyArr, key)
     }
   }
   return keyArr
 }
 
-function genKeyArr(fileArr = ['formConfig']) {
+function genKeyArr(key:string|RegExp='key', fileArr=['formConfig'], outFile='keyArr') {
   const fileRegex = new RegExp(`(${fileArr.join('|')}).json5$`)
   let keyArr = []
   return {
@@ -104,17 +105,11 @@ function genKeyArr(fileArr = ['formConfig']) {
     async transform(src, id) {
       if (fileRegex.test(id)) {
         let arr = (await strModule(src)).default
-        keyArr = traverse(arr, keyArr)
+        keyArr = traverse(arr, keyArr, key)
        
-        await fs.writeFile("src/static/keyArr.json", JSON.stringify(keyArr, null, 2), (err) => {
-          if (err) throw err;
-          console.log('keyArr updated.');
-        })
+        fs.writeFileSync(`src/static/${outFile}.json`, JSON.stringify(keyArr, null, 2))
+        console.log(`${outFile} updated.`)
       }
     }
   }
 }
-
-
-
-

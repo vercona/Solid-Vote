@@ -5,6 +5,10 @@ import Page from "~/components/Page";
 import useStore from './store'
 import formParser from '~/use/formParser'
 
+//@ts-ignore 
+import valueArr from '~/static/keyArr.json'
+import showArr from '~/static/showArr.json' 
+
 /* interface Form {
   label: 'Submission Settings',
   type: 'category',
@@ -52,6 +56,10 @@ export default function builder () {
   return (
     <Page
       title="Vote Builder"
-    > {formParser(arr)} </Page>
+    > 
+      {formParser(arr)} 
+      <br/>{JSON.stringify(valueArr)}
+      <br/>{JSON.stringify(showArr)}
+    </Page>
   )
 }
