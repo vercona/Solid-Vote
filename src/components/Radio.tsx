@@ -4,17 +4,20 @@ import {Dynamic} from "solid-js/web";
 import {createSignal, For, Show} from "solid-js";
 import formParser from '~/use/formParser'
 
-export default function radio (props) {
+export default function radio (props: {
+  label: string,
+  choices?: [any]
+}) {
   // will link state to global store l8r
-  let [selected, setSelected] = createSignal(props?.options?.choices?.[0] || {}) // first option is default (if-applicable)
+  let [selected, setSelected] = createSignal(props?.choices?.[0] || {}) // first option is default (if-applicable)
 
   return (<>
     <details>
-      <summary><strong>{props.options.label}:</strong>  {selected().label || selected()}</summary>
+      <summary><strong>{props.label}:</strong>  {selected().label || selected()}</summary>
       
-      <For each={props.options.choices}>
+      <For each={props.choices}>
         {(item, index) => {
-          let key = props.options.label.replace(/\s+/,'')
+          let key = props.label.replace(/\s+/,'')
           let label = typeof item === 'string' ? item : item.label
           return (
             <div style="margin-left:10px" onClick={e=>setSelected(item)}>

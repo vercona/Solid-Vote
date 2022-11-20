@@ -25,7 +25,7 @@ export default function formParser(arr) {
     }
 
     let comp = componentMap[el.el]
-    let foo = <Dynamic component={comp} options={el}> {children} </Dynamic>
+    let foo = <Dynamic {...el} component={comp}> {children} </Dynamic>
     componentArr.push(foo)
   }
 

@@ -1,16 +1,29 @@
 import {css} from "solid-styled"
 
-export default function Range (props) {
+enum test {
+  min,
+  max,
+  default
+}
+
+export default function Range (props: {
+  label: string,
+  state: {
+    [Property in 'min'|'max'|'default']: number | string
+  }
+}) {
   //css``
   return (
     <>
-      <label>{props.options.label}:</label>
+      <label>{props.label}:</label>
       <input
-        type="range" min={props.options.state.min} max={props.options.state.max} value={props.options.state.default} 
+        type="range" min={props.state.min} max={props.state.max} value={props.state.default} 
         oninput="this.nextElementSibling.value = this.value"
       />
-      <input type="text" value={props.options.state.default}
-      oninput="this.previousElementSibling.value = this.value"/>
+      <input 
+        type="text" value={props.state.default}
+        oninput="this.previousElementSibling.value = this.value"
+      />
     </>
   )
 }

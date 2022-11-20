@@ -10,16 +10,16 @@ export default function Home() {
 
   return (
     <main>
-      <Collapse options={{label:"hi"}}>
+      <Collapse label="hi">
         hi
       </Collapse>
 
-      <Radio options={{label:"hi"}}/>
+      <Radio label="hi" />
 
-      <Range options={{label:"hi", state:{min:0, max:1, default: 0.5} }}/>
+      <Range label="hi" state={ {min:0, max:1, default: 0.5} } />
 
       <br/>
-      <Text options={{label:"hi"}}/>
+      <Text label="hi" />
     </main>
   );
 }

@@ -1,7 +1,10 @@
 /* import { Title } from "@solidjs/meta"; */
 import { css } from "solid-styled"
 
-export default function page (props) {
+export default function page (props:{
+  title: string,
+  children
+}) {
   css`
     .page-wrapper {
       margin: 5% 0 5% 20%
