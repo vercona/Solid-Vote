@@ -104,3 +104,5 @@ spectrum rating: for polar rating  simple<==>complex
 ability to Veto
 
 what if you want 2 winners via two diff algos? e.g. i want he mean and mode
+
+how do i init default values on keyArr/valArr tho?...
