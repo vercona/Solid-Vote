@@ -107,3 +107,5 @@ what if you want 2 winners via two diff algos? e.g. i want he mean and mode
 
 how do i init default values on keyArr/valArr tho?...
 actually, it may be difficult to provide defaults given the interconnected nature of the validators. a simple change could invalidate the whole form.
+
+what about simply point allocation rather than strictly percentage...?
