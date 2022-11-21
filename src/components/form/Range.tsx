@@ -1,11 +1,5 @@
 import {css} from "solid-styled"
 
-enum test {
-  min,
-  max,
-  default
-}
-
 export default function Range (props: {
   label: string,
   state: {

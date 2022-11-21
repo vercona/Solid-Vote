@@ -12,7 +12,7 @@ export default function radio (props: {
 
   return (<>
     <details>
-      <summary><strong>{props.label}:</strong>  {selected().label || selected()}</summary>
+      <summary><strong>{props.label}:</strong> {selected().label || selected()}</summary>
       
       <For each={props.choices}>
         {(item, index) => {
