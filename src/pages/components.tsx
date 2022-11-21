@@ -1,7 +1,7 @@
-import Collapse from "~/components/Collapse";
-import Radio from "~/components/Radio";
-import Range from "~/components/Range";
-import Text from "~/components/Text";
+import Collapse from "~/components/form/Collapse";
+import Radio from "~/components/form/Radio";
+import Range from "~/components/form/Range";
+import Text from "~/components/form/Text";
 
 import { css } from 'solid-styled';
 

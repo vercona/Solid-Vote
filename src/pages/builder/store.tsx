@@ -1,6 +1,8 @@
 //@ts-nocheck
 import formConfig from '~/static/formConfig'
 
+import valueArr from '~/static/keyArr.json'
+import showArr from '~/static/showArr.json' 
 
 /*
 let validMap = {
