@@ -41,8 +41,8 @@ export default function Home() {
 
         <Collapse label="Vote">
           <div>
-            <Vote/>
-            <UpDown/>
+            <div> <Vote/> count </div>
+            <div> <UpDown> count </UpDown> </div>
             <Rate/>
             <Stars/>
             <Percent/>

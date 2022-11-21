@@ -1,8 +1,11 @@
+import { createSignal } from "solid-js"
 import {css} from "solid-styled"
 
-export default function Vote(props: {
-  //label: string
-}) {
+
+export default function Vote(props) {
   //css` `
-  return (<div>Vote</div>)
+  let [selected, setSelected] = createSignal(false)
+  return (<>
+    <input type="checkbox" checked={selected()} onInput={()=>setSelected(!selected())}/>
+  </>)
 }
