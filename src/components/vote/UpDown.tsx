@@ -7,19 +7,19 @@ export default function UpDown(props: {
   children?
 }) {
   //css` `
-  let [upVoted, setUpVoted] = createSignal(false)
-  let [downVoted, setDownVoted] = createSignal(false)
+  let [value, setValue] = createSignal(0)
+  let updateValue = (input:-1|1) => setValue( input * +(value() !== input) )
 
   return (<>
-    <Arrow 
-      onClick={() => setUpVoted(!upVoted()) && setDownVoted(false) }
-      fill={upVoted()?"orange":"none"} 
+    <Arrow
+      onClick={()=>updateValue(1)}
+      fill={value()===1?"orange":"none"} 
       stroke="orange"
     />
       {props.children}
-    <Arrow 
-      onClick={() => setDownVoted(!downVoted())  && setUpVoted(false)}
-      fill={downVoted()?"blue":"none"} 
+    <Arrow
+      onClick= {()=>updateValue(-1) }
+      fill={value()===-1?"blue":"none"} 
       style="transform:scaleY(-1)"
       stroke="blue"
     />
