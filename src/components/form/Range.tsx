@@ -12,10 +12,12 @@ export default function Range (props: {
       <label>{props.label}:</label>
       <input
         type="range" min={props.state.min} max={props.state.max} value={props.state.default} 
+        //@ts-ignore
         oninput="this.nextElementSibling.value = this.value"
       />
       <input 
         type="text" value={props.state.default}
+        //@ts-ignore
         oninput="this.previousElementSibling.value = this.value"
       />
     </>

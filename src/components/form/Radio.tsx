@@ -5,34 +5,38 @@ import formParser from '~/use/formParser'
 
 export default function radio (props: {
   label: string,
-  choices?: [any]
+  choices: []|[any]
 }) {
   // will link state to global store l8r
-  let [selected, setSelected] = createSignal(props?.choices?.[0] || {}) // first option is default (if-applicable)
+  let [selected, setSelected] = createSignal(props?.choices?.[0] || '') // first option is default (if-applicable)
 
   return (<>
     <details>
       <summary><strong>{props.label}:</strong> {selected().label || selected()}</summary>
       
-      <For each={props.choices}>
-        {(item, index) => {
-          let key = props.label.replace(/\s+/,'')
-          let label = typeof item === 'string' ? item : item.label
-          return (
-            <div style="margin-left:10px" onClick={e=>setSelected(item)}>
-              <input
-                type="radio" id={key+index} name={key}
-                checked={selected()===item || selected().label===item}
-              />
-              <label>{label}</label> 
-              <Show when={item?.description}>
-                <i style="display: inline"> – {item.description} </i>
-              </Show>
-              <br/>
-            </div>
-          )
-        }}
-      </For>
+      {props.choices.length === 0 
+      ?(  <span style="margin-left:10px">No options...</span>) 
+      :(  <For each={props.choices}>
+            {(item, index) => {
+              let key = props.label.replace(/\s+/,'')
+              let label = typeof item === 'string' ? item : item.label
+              return (
+                <div style="margin-left:10px" onClick={e=>setSelected(item)}>
+                  <input
+                    type="radio" id={key+index} name={key}
+                    checked={selected()===item || selected().label===item}
+                  />
+                  <label>{label}</label> 
+                  <Show when={item?.description}>
+                    <i style="display: inline"> – {item.description} </i>
+                  </Show>
+                  <br/>
+                </div>
+              )
+            }}
+          </For>
+        )
+      }
       
       <br/>
 

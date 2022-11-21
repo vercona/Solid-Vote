@@ -14,7 +14,7 @@ export default function Home() {
         hi
       </Collapse>
 
-      <Radio label="hi" />
+      <Radio label="hi" choices={[]}/>
 
       <Range label="hi" state={ {min:0, max:1, default: 0.5} } />
 
