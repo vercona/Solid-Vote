@@ -5,7 +5,7 @@ import formParser from '~/use/formParser'
 
 export default function radio (props: {
   label: string,
-  choices?: [any]
+  choices?: any[]
 }) {
   // will link state to global store l8r
   let [selected, setSelected] = createSignal(props?.choices?.[0] || {}) // first option is default (if-applicable)
