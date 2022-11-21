@@ -5,7 +5,6 @@ import Page from "~/components/Page";
 import useStore from './store'
 import formParser from '~/use/formParser'
 
-//@ts-ignore 
 import valueArr from '~/static/keyArr.json'
 import showArr from '~/static/showArr.json' 
 
