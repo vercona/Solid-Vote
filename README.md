@@ -111,3 +111,26 @@ actually, it may be difficult to provide defaults given the interconnected natur
 what about simply point allocation rather than strictly percentage...?
 
 binary comparison is a little tough as it must format how submissions are displayed...
+
+how to handle simultaneous votes [2 diff role groups, or for two diff rating/positions] on the same dataset/submission-set
+
+how to handle comment/sub level voting?
+(
+  i don't want to create a new voting event for each sub level...
+  and data may need to be shared... hmm
+)
+
+
+TODO:
+
+so i’ll replace ‘key’ with ‘value’
+i’ll add ‘show’ all elements
+show: 'category-…' or 'choice-…'
+not everything needs show
+but anything could at any point down the line
+to generate show arr, look for both show and value keys
+perhaps there is a way to mark/denote an el/component produces a value?
+valueStore will be init with null and values must be explicitly set. if a previously set value is changed and invalidation occurs, alert to errors if possible else… reset invalid to null?
+
+enable conversion to html/yml
+
