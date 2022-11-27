@@ -34,6 +34,8 @@ universal dictionary
 community driven snake game
 community chess 
 
+stack builder - choose which frameworks and libs you want. then the diff assemble to build the codebase for you
+
 
 Principals
 
@@ -41,3 +43,8 @@ Principals
 roles
 
 assignment/verification quizzes
+
+
+ActivityPub?
+• https://www.w3.org/TR/activitypub/
+• https://github.com/LemmyNet/activitypub-federation-rust
